@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src= "https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    </head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class LikeButton extends React.Component{
+            constructor(props){
+                super(props);
+                this.state={
+                    liked :false,
+                };
+                
+            }
+            render(){
+                return <button type="submit" onClick={()=>{this.setState({liked:true})}}>{this.state.liked === true? "liked":"like"}</button>;
+
+                // return e('button',{onClick : ()=>{this.setState({liked:true})}},
+                // this.state.liked === true ? "liked": "like",);
+            }
+        }
+        
+    </script>
+    <script type= "text/babel">
+        ReactDOM.render(<LikeButton name="is qro human?"/>,document.querySelector("#root"));//JSX 라고 칭한다. => javascript + XML, 바벨에서 지원하는 것이다. 
+    </script>
+</body>
+</html>
