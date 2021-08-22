@@ -25,6 +25,7 @@ const NumberBaseball = () => {
   const [value, setValue] = useState("");
   const [answer, setAnswer] = useState(getNumbers());
   const [tries, setTries] = useState([]);
+  const inputEl = useRef(null);
 
   const onSubmitForm = (e) => {
     //답을 제출하는 순간 답을 비교한다.
@@ -40,6 +41,7 @@ const NumberBaseball = () => {
       setValue("");
       setAnswer(getNumbers());
       setTries([]);
+      inputEl.current.focus();
     } else {
       const answerArray = value.split("").map((v) => parseInt(v));
       let strike = 0;
@@ -51,6 +53,7 @@ const NumberBaseball = () => {
         setValue("");
         setAnswer(getNumbers());
         setTries([]);
+        inputEl.current.focus();
       } else {
         //답틀렸으면
         for (let i = 0; i < 4; i++) {
@@ -70,9 +73,11 @@ const NumberBaseball = () => {
           ];
         });
         setValue("");
+        inputEl.current.focus();
       }
     }
   };
+
   const onChangeInput = (e) => {
     console.log(answer);
     setValue(e.currentTarget.value);
