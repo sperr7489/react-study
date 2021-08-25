@@ -4,18 +4,20 @@ const ResponseCheck = () => {
   const [state, setState] = useState("waiting");
   const [Message, setMessage] = useState("클릭해서 시작하세요");
   const [result, setResult] = useState([]);
+  const timeout = useRef(null);
+  const startTime = useRef();
+  const endTime = useRef();
 
-  var timeout, startTime, endTime;
   //반응속도 검사하기위한 시작시간. 반응속도 비교값
   //startTime과 endTime은 수정이되어도 렌더링이 발생시키지 않기 위해 state 밖에 선언한다.
   const onClickScreen = () => {
     if (state === "waiting") {
       setState("ready");
       setMessage("초록색이 되면 클릭하세요");
-      timeout = setTimeout(() => {
+      timeout.current = setTimeout(() => {
         setState("now");
         setMessage("지금 클릭");
-        startTime = new Date();
+        startTime.current = new Date();
       }, Math.floor(Math.random() * 1000) + 2000);
       console.log(timeout);
     } else if (state === "ready") {
@@ -25,10 +27,10 @@ const ResponseCheck = () => {
       setMessage("너무 성급해! 좀만 천천히 해봐!");
     } else if (state === "now") {
       //자 이제 눌러!!
-      endTime = new Date();
+      endTime.current = new Date();
       setState("waiting");
       setResult((prevResult) => {
-        return [...prevResult, endTime - startTime];
+        return [...prevResult, endTime.current - startTime.current];
       });
       setMessage("클릭해서 다시 시작하세요!");
     }
@@ -52,6 +54,14 @@ const ResponseCheck = () => {
       <div id="screen" className={state} onClick={onClickScreen}>
         {Message}
       </div>
+      {() => {
+        if (result.length === 0) {
+          return null;
+        } else {
+          return;
+        }
+      }}
+
       {renderAverage()}
     </>
   );
