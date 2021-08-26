@@ -70,7 +70,10 @@ class RSP extends Component {
     //컴포넌트가 제거되기 직전에 발생!
     clearInterval(this.interval);
   }
-  onClickBtn = (choice) => {
+  onClickBtn = (choice) => () => {
+    //이렇게 함으로써  onClick={() => this.onClickBtn("바위")}을
+    //onClick={onClickBtn("바위")}이렇게 바꿔줄 수 있음
+    //react에서 굉장히 많이 사용되는 패턴으로 이를 고차함수라고 한다.
     const { imgCoord } = this.state;
     clearInterval(this.interval);
     const myScore = scores[choice];
@@ -123,25 +126,17 @@ class RSP extends Component {
           }}
         />
         <div>
-          <button
-            id="rock"
-            className="btn"
-            onClick={() => this.onClickBtn("바위")}
-          >
+          <button id="rock" className="btn" onClick={this.onClickBtn("바위")}>
             바위
           </button>
           <button
             id="scissor"
             className="btn"
-            onClick={() => this.onClickBtn("가위")}
+            onClick={this.onClickBtn("가위")}
           >
             가위
           </button>
-          <button
-            id="paper"
-            className="btn"
-            onClick={() => this.onClickBtn("보")}
-          >
+          <button id="paper" className="btn" onClick={this.onClickBtn("보")}>
             보
           </button>
         </div>
